@@ -1,0 +1,11 @@
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title" id="modal-title" ng-bind="ctrl.options.title"></h3>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-success fa fa-check" type="button" ng-click="ctrl.submit('ok')" ng-if="ctrl.options.ok" ></button>
+        <button class="btn btn-warning fa fa-times" type="button" ng-click="ctrl.cancel()" ng-if="ctrl.options.cancel"></button>
+    </div>
+
+</div>

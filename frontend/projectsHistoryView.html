@@ -1,0 +1,19 @@
+<div><br /><br /></div>
+  
+  <table class="table table-stripped table-hover table-bordered">
+    <tr>
+      <th>#</th>
+      <th>Imię kierownika</th>
+      <th>Nazwisko kierownika</th>
+      <th>Nazwa projektu</th>
+      <th>Lista umów</th>
+    </tr>
+    <tr ng-repeat="project in ctrl.projectsHistory">
+      <td>{{$index + 1}}</td>
+      <td ng-bind="project.menagerData.firstName"></td>
+      <td ng-bind="project.menagerData.lastName"></td>
+      <td ng-bind="project.name"></td>
+      <td><button type="button" class="btn btn-primary" ng-click="ctrl.getContracts($index)" >Lista umów </td>
+    </tr>
+  </table>
+  

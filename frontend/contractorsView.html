@@ -1,0 +1,48 @@
+<div style="width: 100%;">
+    <form class="form form-inline">
+      <button style="float:left"
+          class="btn btn-primary"
+          ng-click="ctrl.edit(-1)"
+        >Dodaj osobę</button>
+      <input style="float: right;"
+        class="form-control"
+        type="text"
+        placeholder="filtr"
+        ng-model="ctrl.q"
+        ng-change="ctrl.refreshData()"
+      />
+      <input style="float: right;"
+        class="form-control"
+        type="number"
+        placeholder="skip"
+        ng-model="ctrl.skip"
+        ng-change="ctrl.refreshData()"
+      />
+      <input style="float: right;"
+        class="form-control"
+        type="number"
+        placeholder="limit"
+        ng-model="ctrl.limit"
+        ng-change="ctrl.refreshData()"
+      />
+      
+    </form>
+  </div>
+  
+  <div><br /><br /></div>
+  
+  <table class="table table-stripped table-hover table-bordered">
+    <tr>
+      <th>#</th>
+      <th>Imię</th>
+      <th>Nazwisko</th>
+      <th>Edycja</th>
+    </tr>
+    <tr ng-repeat="contractor in ctrl.contractors">
+      <td>{{$index + 1}}</td>
+      <td ng-bind="contractor.firstName"></td>
+      <td ng-bind="contractor.lastName"></td>
+      <td><button type="button" class="btn btn-primary" ng-click="ctrl.edit($index)">Edytuj</td>
+    </tr>
+  </table>
+  

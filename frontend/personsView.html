@@ -1,0 +1,62 @@
+<div style="width: 100%;">
+  <form class="form form-inline">
+    <button style="float:left"
+        class="btn btn-primary"
+        ng-click="ctrl.edit(-1)"
+      >Dodaj osobę</button>
+    <input style="float: right;"
+      class="form-control"
+      type="text"
+      placeholder="filtr"
+      ng-model="ctrl.q"
+      ng-change="ctrl.refreshData()"
+    />
+    <input style="float: right;"
+      class="form-control"
+      type="number"
+      placeholder="skip"
+      ng-model="ctrl.skip"
+      ng-change="ctrl.refreshData()"
+    />
+    <input style="float: right;"
+      class="form-control"
+      type="number"
+      placeholder="limit"
+      ng-model="ctrl.limit"
+      ng-change="ctrl.refreshData()"
+    />
+    
+  </form>
+</div>
+
+<div><br /><br /></div>
+
+<table class="table table-stripped table-hover table-bordered">
+  <tr>
+    <th>#</th>
+    <th>Imię</th>
+    <th>Nazwisko</th>
+    <th>Rok urodzenia</th>
+    <th>Transakcji</th>
+    <th>Stan konta</th>
+    <th>Edycja</th>
+    <th>Historia transakcji</th>
+  </tr>
+  <tr ng-repeat="person in ctrl.persons">
+    <td>{{$index + 1}}</td>
+    <td ng-bind="person.firstName"></td>
+    <td ng-bind="person.lastName"></td>
+    <td ng-bind="person.year"></td>
+    <td ng-bind="person.transactions"></td>
+    <td ng-bind="person.balance"></td>
+    <td><button type="button" class="btn btn-primary" ng-click="ctrl.edit($index)">Edytuj</td>
+    <td>
+      <a
+        ng-href="#/transactionshistory/:{{person._id}}"
+        class="btn btn-primary"
+        role="button"
+        >Przejdź</a
+      >
+    </td>
+  </tr>
+</table>

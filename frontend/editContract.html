@@ -1,0 +1,26 @@
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title" id="modal-title" ng-bind="ctrl.options.title"></h3>
+    </div>
+    <div class="modal-body" id="modal-body">
+
+        <form class="form">
+            <label for="contractor">Wykonawca</label>
+            <select id="contractor" class="form-control" ng-model="ctrl.options.data.contractor">
+                <option ng-repeat="contractor in ctrl.contractors" value="{{contractor._id}}" ng-bind="contractor.firstName+' '+contractor.lastName"></option>
+            </select>
+            <label for="dateB">Data rozpoczęcia</label>
+            <input id="dateB" type="date" class="form-control" ng-model="ctrl.options.data.dateB"/>
+            <label for="dateE">Data zakończenia</label>
+            <input id="dateE" type="date" class="form-control" ng-model="ctrl.options.data.dateE"/>
+            <label for="salary">Wynagrodzenie</label>
+            <input id="salary" type="number" class="form-control" ng-model="ctrl.options.data.salary"/>
+        </form>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success fa fa-check" type="button" ng-click="ctrl.submit('ok')" ng-if="ctrl.options.ok" ></button>
+        <button class="btn btn-warning fa fa-times" type="button" ng-click="ctrl.cancel()" ng-if="ctrl.options.cancel"></button>
+    </div>
+
+</div>
