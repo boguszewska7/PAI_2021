@@ -10,16 +10,6 @@ app.controller('EditContractCtrl', [ '$http','$uibModalInstance', 'options', fun
         },
         function(err) {}
     ) 
-   /* $http.get('/contract?_id='+ ctrl.options.idContract).then(
-        function(res) {
-            ctrl.options.data = res.data
-        },
-        function(err) {
-            console.log("problem get contract")
-            $uibModalInstance.close()
-            lib.sendError(env.res, 400, 'CONTRACT.insertOne() failed')
-        }
-    ) */
 
     ctrl.submit = function(answer) { $uibModalInstance.close(answer) }
     ctrl.cancel = function() { $uibModalInstance.dismiss(null) }

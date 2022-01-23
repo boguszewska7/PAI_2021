@@ -14,20 +14,25 @@
               <th>Data zakończenia umowy</th>
               <th>Wynagrodzenie</th>
             </tr>
-            <tr ng-repeat="contract in ctrl.contracts | filter: { project: ctrl.options.idProject }" ng-init="$parent.total = total + contract.salary ">
-              <td>{{$index + 1}}</td>
-              <td ng-bind="contract.contractorData.firstName"></td>
-              <td ng-bind="contract.contractorData.lastName"></td>
-              <td ng-bind="contract.dateB | date:'dd/MM/yyyy'"></td>
-              <td ng-bind="contract.dateE | date:'dd/MM/yyyy'"></td>
-              <td ng-bind="contract.salary">zł</td>
+              <tr ng-repeat="contract in ctrl.contracts" ng-init="$parent.total = total + contract.salary">
+              <td ng-class="{true: 'contractSet', false: 'contractUnset'}[contract.finish == true]">{{$index + 1}}</td>
+              <td ng-class="{true: 'contractSet', false: 'contractUnset'}[contract.finish == true]" ng-bind="contract.contractorData.firstName"></td>
+              <td ng-class="{true: 'contractSet', false: 'contractUnset'}[contract.finish == true]" ng-bind="contract.contractorData.lastName"></td>
+              <td ng-class="{true: 'contractSet', false: 'contractUnset'}[contract.finish == true]" ng-bind="contract.dateB | date:'dd/MM/yyyy'"></td>
+              <td ng-class="{true: 'contractSet', false: 'contractUnset'}[contract.finish == true]" ng-bind="contract.dateE | date:'dd/MM/yyyy'"></td>
+              <td ng-class="{true: 'contractSet', false: 'contractUnset'}[contract.finish == true]" ng-bind="contract.salary">zł</td>
             </tr>
           </table>
           <div class="sum">
               <p>Suma wynagorodzeń:</p>
               <p class="sum-detail">{{total}}</p>
+
             
           </div>
+          <div class="sum"  ng-class="{false: 'hidden'}[ctrl.options.history == true]">
+            <p>Ilość nierozliczonych umów:</p>
+            <p ng-class="{true: 'contractOk', false: 'contractBad'}[ctrl.notfinish == 0]" ng-bind="ctrl.notfinish"></p>
+        </div>
           
 
     </div>

@@ -6,7 +6,7 @@ const contractHistory = module.exports = {
     handle: function(env) {
        let contractData = {};
 
-        const sendAllContractsHistory = function (q = "") {
+        const sendAllContractsHistory = function (_idProject) {
             db.contracts
             .aggregate(
                 [{
@@ -38,6 +38,11 @@ const contractHistory = module.exports = {
                         "_id": 0
                 }
             }},
+            {
+                $match: {
+                "projectData.oldId" : _idProject
+                }
+            }
               ])
             .toArray(function (err, contracts) {
               if (!err) {
@@ -48,7 +53,7 @@ const contractHistory = module.exports = {
             });
           };
 
-        const sendManagerContractsHistory = function(idMenager){
+        const sendManagerContractsHistory = function(idMenager, _idProject){
             db.contracts
             .aggregate(
                 [{
@@ -91,6 +96,11 @@ const contractHistory = module.exports = {
                 $match: {
                     "projectData.menager" : idMenager
                 }
+            },
+            {
+                $match: {
+                    "projectData.oldId" : _idProject
+                }
             }
               ]
             )
@@ -107,16 +117,13 @@ const contractHistory = module.exports = {
         case "GET":
             let rolaaa = lib.sessions[env.session].roles;
             let iddd = lib.sessions[env.session].id;
-            _id = db.ObjectId(env.urlParsed.query._id);
-                  if (_id) {
-                    db.contracts.findOne({ _id }, function (err, result) {
-                    lib.sendJson(env.res, result);
-                  });} 
+            _idProject = db.ObjectId(env.urlParsed.query._id);
+
             if(rolaaa == "user"){
-                sendManagerContractsHistory(iddd);
+                sendManagerContractsHistory(iddd, _idProject);
             }
             else if(rolaaa == "admin") {
-                sendAllContractsHistory();
+                sendAllContractsHistory(_idProject);
             }
           
         break;

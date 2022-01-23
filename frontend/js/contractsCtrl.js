@@ -1,19 +1,32 @@
-app.controller('ContractsCtrl', [ '$http', 'common', function($http, common) {
+app.controller('ContractsCtrl', [ '$http','$route', 'common', function($http, $route, common) {
     let ctrl = this
 
     ctrl.contractMake = {};
 
+    ctrl.all = [];
+
     ctrl.contractsHistory = [];
+    ctrl.contractSet = [];
     ctrl.refreshData = function () {
         $http
         .get("/contract")
           .then(
             function (res) {
-              ctrl.contractsHistory = res.data;
+              console.log(res.data[1].finish)
+              for(let i=0; i < res.data.length; i++ ){
+                if(res.data[i].finish){ 
+                  ctrl.contractSet.push(res.data[i]);
+                }
+                else{
+                  ctrl.contractsHistory.push(res.data[i]);
+                }
+              }
+
             },
-            function (err) {}
-          );
+            function (err) {})
     };
+
+    
 
     ctrl.refreshData();
 
@@ -29,12 +42,13 @@ app.controller('ContractsCtrl', [ '$http', 'common', function($http, common) {
         }
         common.dialog('makeContract.html', 'MakeContractCtrl', options, function(answer) {
             if(answer == 'ok') {
+              ctrl.contractMake.finish = false
                 $http.post('/contract', ctrl.contractMake).then(
                     function(res) {
                         $http.get('/contractor?_id=' + ctrl.contractMake.contractor).then(
                             function(res) {
                                 common.alert.show('Umowa z ' + res.data.firstName + ' ' + res.data.lastName)
-                                ctrl.refreshData();
+                              
                             },
                             function(err) {}
                         )
@@ -43,7 +57,8 @@ app.controller('ContractsCtrl', [ '$http', 'common', function($http, common) {
                         common.alert.show('Umowa nieudana', 'alert-danger')
                     }
                 )
-            }
+            }ctrl.reloadRoute();
+            ctrl.refreshData();
         })
     };
 
@@ -65,19 +80,70 @@ app.controller('ContractsCtrl', [ '$http', 'common', function($http, common) {
          if(answer =="ok"){
           delete options.data.contractorData
           delete options.dataprojectData
+          
               $http.put("/contract?_id="+ options.idContract, options.data).then(
                 function (res) {
                   ctrl.contractsHistory = res.data;
                   common.alert.show("Dane zmienione");
-                  ctrl.refreshData();
+
                 },
                 function (err) {
                   console.log("Blad z zmienianiem danych" +options.data);
                 }
               );
             }
+            ctrl.reloadRoute();
+            ctrl.refreshData();
           } 
      )};
+
+    ctrl.reloadRoute = function() {
+ 
+      // Reload only the route which will re-instantiate
+      $route.reload();
+  };
+
+    ctrl.settlementContract = function(index){
+      let options = { 
+        title: 'Czy na pewno chcesz rozliczyć umowę?',
+        ok: true,
+        cancel: true,
+        data: ctrl.contractsHistory[index],
+        idContract : ctrl.contractsHistory[index]._id,
+    }
+    common.dialog(
+      "settlementContract.html",
+      "settlementContractCtrl",
+      options,
+      function (answer) {
+         if(answer =="ok"){
+          delete options.data.contractorData
+          delete options.dataprojectData
+          options.data.finish = true
+
+              $http.put("/contract?_id="+ options.idContract, options.data).then(
+                function (res) {
+                  for(let i=0; i < res.data.length; i++ ){
+                if(res.data[i].finish){ 
+                  ctrl.contractSet.push(res.data[i]);
+                }
+                else{
+                  ctrl.contractsHistory.push(res.data[i]);
+                }
+              }
+                  common.alert.show("Umowa została rozliczona");
+                  
+                },
+                function (err) {
+                  console.log("Blad z zmienianiem danych" + options.data);
+                }
+              );
+                ctrl.reloadRoute();
+                ctrl.refreshData();
+            }
+          } 
+     )
+    };
 
           
 

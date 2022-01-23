@@ -16,6 +16,7 @@ const auth = module.exports = {
                         lib.sessions[env.session].roles = doc.roles
                         lib.sessions[env.session].id = doc._id
                         lib.sendJson(env.res, lib.sessions[env.session])
+                        
                     } else {
                         lib.sendError(env.res, 401, 'authorization failed')
                     }

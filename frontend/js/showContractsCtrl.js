@@ -3,27 +3,36 @@ app.controller('showContractsCtrl', [ '$http', '$uibModalInstance', 'options', '
   $controller('ContractsCtrl')
   let ctrl = this
     ctrl.options = options
-    ctrl.acontracts = []
+    ctrl.contracts = []
+
+ let c = 0;
 
 
     ctrl.submit = function(answer) { $uibModalInstance.close(answer) }
     ctrl.cancel = function() { $uibModalInstance.dismiss(null) }
-    console.log(ctrl.options.history)
+
+
     if(!ctrl.options.history){
        $http
-        .get("/contract")
+        .get("/contract" )
           .then(
             function (res) {
               ctrl.contracts = res.data;         
             },
             function (err) {}
           );
-    }
+      }
     else{
-      $http
-      .get("/contractHistory")
+ $http
+      .get("/contractHistory?_id="+ ctrl.options.idProject)
         .then(
           function (res) {
+            for(let i=0; i<res.data.length; i++){
+              if(!res.data[i].finish){
+                c++;
+              }
+            }
+            ctrl.notfinish = c;
             ctrl.contracts = res.data;         
           },
           function (err) {}

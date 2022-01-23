@@ -19,6 +19,6 @@
       <td ng-bind="project.menagerData.lastName"></td>
       <td ng-bind="project.name"></td>
       <td><button type="button" class="btn btn-primary" ng-click="ctrl.getContracts($index)" >Lista umów</td>
-      <td><button type="checkbox" ng-click="ctrl.completeProject($index)">Zakończ projekt</button></td>
+      <td><button class="btn btn-danger" type="button" ng-click="ctrl.completeProject($index)">Zakończ projekt</button></td>
     </tr>
   </table>

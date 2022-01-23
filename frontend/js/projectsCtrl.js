@@ -40,8 +40,7 @@ app.controller('ProjectsCtrl', [ '$http', 'common',  function($http, common) {
                     );       
      };
 
-     ctrl.chceckRole();
-    
+    ctrl.chceckRole();
     
 
     //nowy projekt
@@ -116,7 +115,7 @@ app.controller('ProjectsCtrl', [ '$http', 'common',  function($http, common) {
      
         $http.post('/projectsHistory', options.thisProject).then(
           function(res) {
-             common.alert.show('Projekt przeniesiony do archiwow ')
+             common.alert.show('Projekt przeniesiony do archiwum projektów ')
              ctrl.refreshData();
           },
           function(err) {}

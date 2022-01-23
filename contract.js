@@ -12,7 +12,9 @@ const contract = module.exports = {
                 project: db.ObjectId(contractData.project),
                 dateB: contractData.dateB, 
                 dateE: contractData.dateE,
-                salary: contractData.salary}
+                salary: contractData.salary, 
+                finish: contractData.finish,
+            }
             return result.contractor && result.dateB <= result.dateE && result.salary > 0 ? result : null
         }
        

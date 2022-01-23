@@ -3,6 +3,10 @@
 </div>
 
 <div><br /><br /></div>
+
+<div class="tittle-contracts">
+  Umowy aktualne
+</div>
   
   <table class="table table-stripped table-hover table-bordered">
     <tr>
@@ -14,6 +18,7 @@
       <th>Wynagrodzenie</th>
       <th>Projekt</th>
       <th>Edycja</th>
+      <th>Rozliczenie</th>
     </tr>
     <tr ng-repeat="contract in ctrl.contractsHistory">
       <td>{{$index + 1}}</td>
@@ -25,5 +30,32 @@
       <td ng-bind="contract.projectData.name"></td>
 
       <td><button type="button" class="btn btn-primary" ng-click="ctrl.editContract($index)">Edytuj</td>
+      <td><button type="button" class="btn btn-primary" ng-click="ctrl.settlementContract($index)">Rozlicz umowę</td>
     </tr>
   </table>
+
+  <div class="tittle-contracts">
+    Umowy zakończone
+  </div>
+
+  <table class="table table-stripped table-hover table-bordered">
+    <tr>
+      <th>#</th>
+      <th>Imię wykonawcy</th>
+      <th>Nazwisko wykonawcy</th>
+      <th>Data rozpoczęcia umowy</th>
+      <th>Data zakończenia umowy</th>
+      <th>Wynagrodzenie</th>
+      <th>Projekt</th>
+    </tr>
+    <tr ng-repeat="contract in ctrl.contractSet">
+      <td>{{$index + 1}}</td>
+      <td ng-bind="contract.contractorData.firstName"></td>
+      <td ng-bind="contract.contractorData.lastName"></td>
+      <td ng-bind="contract.dateB | dateFormat1"></td>
+      <td ng-bind="contract.dateE | dateFormat1"></td>      
+      <td ng-bind="contract.salary">zł</td>
+      <td ng-bind="contract.projectData.name"></td>
+    </tr>
+  </table>
+  

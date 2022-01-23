@@ -14,6 +14,7 @@ const lib = (module.exports = {
     res.end();
   },
 
+
   checkPermissions: function(reqStr, roles) {
 
     console.log('\'' + reqStr + '\'')

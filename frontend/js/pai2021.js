@@ -27,8 +27,8 @@ app.constant("routes", [
     templateUrl: "contractView.html",
     controller: "ContractsCtrl",
     controllerAs: "ctrl",
-    menu: "Umowy",
-    roles: [ "admin", "user" ] 
+    menu: "Umowy bieżące",
+    roles: [ "admin", "user"] 
   },
 
   {
@@ -44,7 +44,7 @@ app.constant("routes", [
     templateUrl: "projectsHistoryView.html",
     controller: "ProjectsHistoryCtrl",
     controllerAs: "ctrl",
-    menu: "Projekty zakończone",
+    menu: "Archiwum projektów",
     roles: [ "admin", "user" ] 
   },
 
